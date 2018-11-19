@@ -51,7 +51,15 @@ var door_status = 1;
       melo.get(0).pause();
       melo.get(0).currentTime = 0;
       melo.get(0).loop = false;
-      door.get(0).play();
+
+      if($('[name=on_mode][value=0]').prop('checked')){
+        setTimeout(off_1, 1500);
+        function off_1(){
+          door.get(0).play();
+        }
+      }else if($('[name=on_mode][value=1]').prop('checked')){
+        door.get(0).play();
+      }
       console.log("melody's loop is " + melo.get(0).loop);
       }
       //以下は立川モードの処理
@@ -80,7 +88,9 @@ var door_status = 1;
 	});
        };
     });
+    // $("#on").removeClass().addClass("btn btn-danger btn-lg  text-center");
   };
+
   function on_door(){
     //戸閉放送流れてる時にonを押したら止めるコード
     $(function(){
@@ -88,11 +98,10 @@ var door_status = 1;
         return;
       };
       if($('[name=on_mode][value=1]').prop('checked')){
-      if(typeof($("#door").get(0).currentTime) != 'undefined'){
-
-        door.get(0).currentTime = 0;
+      // if(typeof($("#door").get(0).currentTime) != 'undefined'){
         door.get(0).pause();
-      }
+        door.get(0).currentTime = 0;
+      // }
       }
     });
   }
@@ -119,9 +128,23 @@ var door_status = 1;
     });
     if(typeof(sm_vi.currentTime) != 'undefined'){
     sm_vi.currentTime = 0;
+    // $("#on").removeClass().addClass("btn btn-danger btn-lg  text-center");
+    // $("#off").removeClass().addClass("btn btn-success btn-lg");
   }
 
   }
+  // 禁煙放送ループ
+  /*
+  setInterval(function(){
+    smoking();
+  	$("#smoking").removeClass().addClass("btn btn btn-default");
+    setTimeout(smok_end, 7000);
+    function smok_end(){
+      $("#smoking").removeClass().addClass("btn btn btn-primary");
+    }
+  }, 60000);
+  */
+
   $('body').on("keydown", function(k){
     if(k.keyCode === 88){
         smoking();
@@ -148,7 +171,6 @@ var door_status = 1;
   $('body').on("keydown", function (m){
     if(m.keyCode === 68){
       //68 = dキー off関数召喚
-      // off();
       off();
     }
   });
@@ -158,16 +180,26 @@ var door_status = 1;
           on();
           on_door();
           // console.log("ON");
+          $("#on").removeClass().addClass("btn btn-danger btn-lg  text-center");
+          $("#off").removeClass().addClass("btn btn-default btn-lg  text-center");
           bell_status = 0;
           door_status = 1;
       };
       if(door_status === 1 && $('#sw_now').text() === "False"){
+          $("#on").removeClass().addClass("btn btn-default btn-lg");
+          $("#off").removeClass().addClass("btn btn-success btn-lg");
           off();
           // console.log("OFF");
           bell_status = 1;
           door_status = 0;
       };
     }, 10);
+
+  //   setInterval(function(){
+  //     $("#on").removeClass().addClass("btn btn-danger btn-lg  text-center");
+  //     $("#off").removeClass().addClass("btn btn-success btn-lg");
+  // }, 10);
+
 
   //メロディ音源ボリューム制御
   let volume = $("#melo_volume");
