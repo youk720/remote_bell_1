@@ -4,12 +4,10 @@ var door_status = 1;
 
   //メロディ及び、ドア閉放送音源選択機能
   let melo = $("#melo");
-  melo.get(0).src = $("#melo_select").val();
   $("#melo_select").change(function(){
   melo.get(0).src = $("#melo_select").val();
   });
   let door = $('#door');
-  door.get(0).src = $("#door_select").val();
   $("#door_select").change(function(){
     door.get(0).src = $("#door_select").val();
   });
@@ -134,7 +132,7 @@ var door_status = 1;
 
   }
   // 禁煙放送ループ
-  /*
+/*
   setInterval(function(){
     smoking();
   	$("#smoking").removeClass().addClass("btn btn btn-default");
@@ -143,7 +141,7 @@ var door_status = 1;
       $("#smoking").removeClass().addClass("btn btn btn-primary");
     }
   }, 60000);
-  */
+*/
 
   $('body').on("keydown", function(k){
     if(k.keyCode === 88){
